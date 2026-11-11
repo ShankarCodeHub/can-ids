@@ -51,6 +51,10 @@ src = ["src", "tests"]
 # UP = pyupgrade, N = naming, SIM = simplifications
 select = ["E", "F", "I", "B", "UP", "N", "SIM"]
 
+[tool.ruff.lint.per-file-ignores]
+# imports after the src/ path fallback for hosted deployments
+"app/dashboard.py" = ["E402"]
+
 [tool.ruff.lint.pep8-naming]
 # ML convention: capital X for feature matrices (X, X_val, Xtr, ...)
 ignore-names = ["X", "X_*", "Xtr", "Xv", "Xte"]

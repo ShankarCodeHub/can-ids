@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import os
 import platform
+import sys
 import time
 from datetime import timedelta
 from pathlib import Path
@@ -27,6 +28,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 import psutil
 import streamlit as st
+
+# Hosted deployments (e.g. Streamlit Community Cloud) install only requirements.txt,
+# not the package itself, so fall back to importing canids from the repository's src/.
+try:
+    import canids  # noqa: F401
+except ModuleNotFoundError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from canids import __version__
 from canids.alerting.alert import DEFAULT_SEVERITY, SEVERITIES

@@ -37,7 +37,11 @@ deploy/raspberry_pi/bundle/
 # ---------- Runtime outputs
 logs/
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
 *.db
+# Office lock files (created while a document is open)
+~$*
 
 # ---------- Notebooks / editors / OS
 .ipynb_checkpoints/

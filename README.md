@@ -108,6 +108,22 @@ Other ways to run it:
 > contents were validated by running the demo from an isolated copy of exactly the files the
 > Dockerfile copies.
 
+### Public demo link (Streamlit Community Cloud, free)
+
+The repository is deploy-ready: the trained models, saved results and demo logs are committed,
+and the dashboard imports `canids` from `src/` when the package is not pip-installed.
+
+1. Push this repository to GitHub.
+2. Go to **https://share.streamlit.io**, sign in with GitHub and click **Create app**.
+3. Choose your repository, branch `master`, main file path `app/dashboard.py`.
+4. Under **Advanced settings**, pick **Python 3.11**. Then click **Deploy**. The first build
+   installs `requirements.txt` and takes a few minutes.
+5. Share the resulting `https://<name>.streamlit.app` link. It opens on any phone or laptop.
+
+On the hosted app, replay uses the in-process virtual bus. Alerts are stored in a temporary
+SQLite file, which resets when the app restarts. Free apps sleep after a period without visitors
+and wake up on the next visit.
+
 ## 4. Results (ROAD, held-out test set, 6,121,249 frames, 24,510 attack frames)
 
 Full tables, figures and the test-access audit log: **[reports/RESULTS.md](reports/RESULTS.md)**.
