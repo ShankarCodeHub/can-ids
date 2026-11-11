@@ -1,0 +1,158 @@
+{
+  "feature_version": "1.0",
+  "dataset": "road",
+  "feature_columns": [
+    "can_id",
+    "dlc",
+    "b0",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "payload_entropy",
+    "hamming_prev_id",
+    "is_known_id",
+    "iat_global",
+    "iat_id",
+    "iat_id_z",
+    "win_rate_fps",
+    "win_unique_ids",
+    "win_top_id_share",
+    "win_id0_share",
+    "win_cur_id_share",
+    "win_iat_mean",
+    "win_iat_std",
+    "win_id_entropy",
+    "win_t_count"
+  ],
+  "feature_groups": {
+    "identity": [
+      "can_id",
+      "dlc",
+      "is_known_id"
+    ],
+    "payload": [
+      "b0",
+      "b1",
+      "b2",
+      "b3",
+      "b4",
+      "b5",
+      "b6",
+      "b7",
+      "payload_entropy",
+      "hamming_prev_id"
+    ],
+    "timing": [
+      "iat_global",
+      "iat_id",
+      "iat_id_z"
+    ],
+    "window": [
+      "win_rate_fps",
+      "win_unique_ids",
+      "win_top_id_share",
+      "win_id0_share",
+      "win_cur_id_share",
+      "win_iat_mean",
+      "win_iat_std",
+      "win_id_entropy",
+      "win_t_count"
+    ]
+  },
+  "meta_columns_not_features": [
+    "timestamp",
+    "label",
+    "attack_type",
+    "source_file",
+    "split"
+  ],
+  "window_frames": 100,
+  "window_ms": 50.0,
+  "split_config": {
+    "train": 0.6,
+    "val": 0.2,
+    "test": 0.2,
+    "purge_frames": 100,
+    "hcrl": {
+      "strategy": "chronological"
+    },
+    "road": {
+      "ambient_strategy": "chronological",
+      "attack_strategy": "capture",
+      "capture_assignment": [
+        [
+          "^max_engine_coolant_temp",
+          "test"
+        ],
+        [
+          "_1(_masquerade)?$",
+          "train"
+        ],
+        [
+          "_2(_masquerade)?$",
+          "val"
+        ],
+        [
+          "_3(_masquerade)?$",
+          "test"
+        ]
+      ],
+      "pair_policy": "both"
+    }
+  },
+  "rows_written": {
+    "train": 15159339,
+    "val": 6131560,
+    "test": 6121249
+  },
+  "files": [
+    "ambient__ambient_dyno_drive_basic_long.parquet",
+    "ambient__ambient_dyno_drive_basic_short.parquet",
+    "ambient__ambient_dyno_drive_benign_anomaly.parquet",
+    "ambient__ambient_dyno_drive_extended_long.parquet",
+    "ambient__ambient_dyno_drive_extended_short.parquet",
+    "ambient__ambient_dyno_drive_radio_infotainment.parquet",
+    "ambient__ambient_dyno_drive_winter.parquet",
+    "ambient__ambient_dyno_exercise_all_bits.parquet",
+    "ambient__ambient_dyno_idle_radio_infotainment.parquet",
+    "ambient__ambient_dyno_reverse.parquet",
+    "ambient__ambient_highway_street_driving_diagnostics.parquet",
+    "ambient__ambient_highway_street_driving_long.parquet",
+    "attacks__correlated_signal_attack_1.parquet",
+    "attacks__correlated_signal_attack_1_masquerade.parquet",
+    "attacks__correlated_signal_attack_2.parquet",
+    "attacks__correlated_signal_attack_2_masquerade.parquet",
+    "attacks__correlated_signal_attack_3.parquet",
+    "attacks__correlated_signal_attack_3_masquerade.parquet",
+    "attacks__fuzzing_attack_1.parquet",
+    "attacks__fuzzing_attack_2.parquet",
+    "attacks__fuzzing_attack_3.parquet",
+    "attacks__max_engine_coolant_temp_attack.parquet",
+    "attacks__max_engine_coolant_temp_attack_masquerade.parquet",
+    "attacks__max_speedometer_attack_1.parquet",
+    "attacks__max_speedometer_attack_1_masquerade.parquet",
+    "attacks__max_speedometer_attack_2.parquet",
+    "attacks__max_speedometer_attack_2_masquerade.parquet",
+    "attacks__max_speedometer_attack_3.parquet",
+    "attacks__max_speedometer_attack_3_masquerade.parquet",
+    "attacks__reverse_light_off_attack_1.parquet",
+    "attacks__reverse_light_off_attack_1_masquerade.parquet",
+    "attacks__reverse_light_off_attack_2.parquet",
+    "attacks__reverse_light_off_attack_2_masquerade.parquet",
+    "attacks__reverse_light_off_attack_3.parquet",
+    "attacks__reverse_light_off_attack_3_masquerade.parquet",
+    "attacks__reverse_light_on_attack_1.parquet",
+    "attacks__reverse_light_on_attack_1_masquerade.parquet",
+    "attacks__reverse_light_on_attack_2.parquet",
+    "attacks__reverse_light_on_attack_2_masquerade.parquet",
+    "attacks__reverse_light_on_attack_3.parquet",
+    "attacks__reverse_light_on_attack_3_masquerade.parquet"
+  ],
+  "built_at": "2026-11-11T04:36:21+00:00",
+  "git_commit": "uncommitted",
+  "seconds": 715.8
+}

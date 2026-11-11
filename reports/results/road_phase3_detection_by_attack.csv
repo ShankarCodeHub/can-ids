@@ -1,0 +1,19 @@
+model,group,frames,detected,detection_rate
+Baseline (rules),correlated_signal,1265,31,0.02450592885375494
+Baseline (rules),correlated_signal_masquerade,1263,0,0.0
+Baseline (rules),fuzzing,114,110,0.9649122807017544
+Baseline (rules),max_engine_coolant_temp,43,13,0.3023255813953488
+Baseline (rules),max_engine_coolant_temp_masquerade,43,1,0.023255813953488372
+Baseline (rules),max_speedometer,6107,317,0.051907646962502045
+Baseline (rules),max_speedometer_masquerade,6107,0,0.0
+Baseline (rules),reverse_light,4784,325,0.06793478260869565
+Baseline (rules),reverse_light_masquerade,4784,0,0.0
+Isolation Forest,correlated_signal,1265,1265,1.0
+Isolation Forest,correlated_signal_masquerade,1263,153,0.12114014251781473
+Isolation Forest,fuzzing,114,114,1.0
+Isolation Forest,max_engine_coolant_temp,43,0,0.0
+Isolation Forest,max_engine_coolant_temp_masquerade,43,0,0.0
+Isolation Forest,max_speedometer,6107,1426,0.233502538071066
+Isolation Forest,max_speedometer_masquerade,6107,35,0.005731128213525462
+Isolation Forest,reverse_light,4784,6,0.001254180602006689
+Isolation Forest,reverse_light_masquerade,4784,0,0.0

@@ -1,0 +1,85 @@
+{
+  "dataset": "road",
+  "protocol": "fixed Phase 3/4 hyperparameters, thresholds re-tuned on val",
+  "if_params": {
+    "n_estimators": 100,
+    "max_samples": 4096,
+    "max_features": 1.0
+  },
+  "classifier": "xgboost",
+  "classifier_params": {
+    "subsample": 1.0,
+    "n_estimators": 200,
+    "max_depth": 8,
+    "learning_rate": 0.03,
+    "colsample_bytree": 1.0
+  },
+  "git_commit": "uncommitted",
+  "val": {
+    "full": {
+      "thresholds": {
+        "t_normal": 0.9,
+        "t_attack": 0.6,
+        "t_suppress": 0.5
+      },
+      "if_threshold": 0.5105813812054589,
+      "macro_f1": 0.8420943274561803,
+      "weighted_f1": 0.9971797938128941,
+      "detection_recall": 0.405063840875532,
+      "alarm_fpr": 0.00012013495159562572,
+      "alarm_precision": 0.9270589909937977
+    },
+    "no_iforest": {
+      "thresholds": {
+        "t_normal": 0.9,
+        "t_attack": 0.6,
+        "t_suppress": 1.01
+      },
+      "if_threshold": null,
+      "macro_f1": 0.8420959961869806,
+      "weighted_f1": 0.9971847812054165,
+      "detection_recall": 0.405063840875532,
+      "alarm_fpr": 0.00011012370562932356,
+      "alarm_precision": 0.9327285041791037
+    },
+    "no_timing": {
+      "thresholds": {
+        "t_normal": 0.9,
+        "t_attack": 0.8,
+        "t_suppress": 0.8
+      },
+      "if_threshold": 0.5293536057357813,
+      "macro_f1": 0.844324186623389,
+      "weighted_f1": 0.9972513717291364,
+      "detection_recall": 0.4017632241813602,
+      "alarm_fpr": 1.334832795506952e-05,
+      "alarm_precision": 0.991262965239644
+    },
+    "no_window": {
+      "thresholds": {
+        "t_normal": 0.9,
+        "t_attack": 0.8,
+        "t_suppress": 0.5
+      },
+      "if_threshold": 0.5682081002556054,
+      "macro_f1": 0.8415794418112679,
+      "weighted_f1": 0.9971760049573892,
+      "detection_recall": 0.4025449491878746,
+      "alarm_fpr": 0.00010678662364055617,
+      "alarm_precision": 0.9342516522938341
+    },
+    "no_payload": {
+      "thresholds": {
+        "t_normal": 0.9,
+        "t_attack": 0.99,
+        "t_suppress": 0.5
+      },
+      "if_threshold": 0.5068516643027916,
+      "macro_f1": 0.8592041159720346,
+      "weighted_f1": 0.9977233825385773,
+      "detection_recall": 0.5078606792321724,
+      "alarm_fpr": 0.00015016868949453214,
+      "alarm_precision": 0.9272628691362151
+    }
+  }
+}

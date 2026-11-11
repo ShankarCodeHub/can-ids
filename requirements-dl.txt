@@ -1,0 +1,4 @@
+# OPTIONAL: PyTorch for the LSTM sequence model (Phase 4, only if time allows).
+# Install the small CPU-only build:
+#   pip install -r requirements-dl.txt --index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1

@@ -1,0 +1,9 @@
+# Development tools: testing, linting, formatting, notebooks.
+-r requirements.txt
+
+pytest==8.3.3
+pytest-cov==6.0.0
+ruff==0.7.4
+black==24.10.0
+jupyterlab==4.2.5
+ipykernel==6.29.5

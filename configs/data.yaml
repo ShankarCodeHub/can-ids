@@ -1,0 +1,108 @@
+# =====================================================================
+# data.yaml - dataset paths, label mapping, splits and feature windows
+# Relative paths are resolved against the project root
+# (canids.utils.config.resolve_path).
+# =====================================================================
+
+seed: 42
+
+paths:
+  raw_hcrl: data/raw/hcrl
+  raw_road: data/raw/road
+  interim: data/interim        # unified-schema parquet (Phase 1 output)
+  processed: data/processed    # features + train/val/test splits (Phase 2 output)
+  artifacts: models            # fitted scalers, per-ID statistics, models
+  results: reports/results
+  figures: reports/figures
+
+# ---------------------------------------------------------------------
+# HCRL Car-Hacking Dataset. File names are the EXPECTED ones and are
+# verified against the real download in Phase 1.
+# ---------------------------------------------------------------------
+hcrl:
+  # file name -> unified label + fine-grained attack_type for INJECTED (flag T) rows.
+  # Rows flagged R are always Normal / attack_type "none".
+  files:
+    DoS_dataset.csv:     {label: DoS,      attack_type: dos}
+    Fuzzy_dataset.csv:   {label: Fuzzy,    attack_type: fuzzy}
+    gear_dataset.csv:    {label: Spoofing, attack_type: gear_spoofing}
+    RPM_dataset.csv:     {label: Spoofing, attack_type: rpm_spoofing}
+    normal_run_data.txt: {label: Normal,   attack_type: none}
+
+# ---------------------------------------------------------------------
+# ROAD dataset. Directory layout and metadata file name are verified in
+# Phase 1. ROAD has NO classic DoS flood -> DoS is not evaluable on ROAD.
+# ---------------------------------------------------------------------
+road:
+  ambient_dir: ambient
+  attack_dir: attacks
+  ignore_dirs: [signal_extractions]   # signal-translated CSVs are not raw frames
+  metadata_file: capture_metadata.json
+  # Key names inside capture_metadata.json (VERIFY against the real file).
+  metadata_keys:
+    injection_id: injection_id             # hex string, "XXX" = any ID (fuzzing), null = unknown
+    injection_data: injection_data_str     # 16 hex chars, "X" = unmodified nibble
+    injection_interval: injection_interval # [start, end] in elapsed seconds
+  # Elapsed seconds are measured from the first frame of the capture (VERIFY).
+  interval_reference: first_frame          # first_frame | absolute
+  attack_family_map:           # substring of capture name -> unified label
+    fuzzing: Fuzzy
+    correlated_signal: Spoofing
+    max_speedometer: Spoofing
+    max_engine_coolant_temp: Spoofing
+    reverse_light: Spoofing
+  # Accelerator attacks: the authors did not disclose labels (null injection ID/data,
+  # interval = whole capture), so frame-level labels cannot be derived -> excluded.
+  exclude_patterns: [accelerator]
+
+# ---------------------------------------------------------------------
+# Unified schema (Phase 1)
+# ---------------------------------------------------------------------
+schema:
+  labels: [Normal, DoS, Fuzzy, Spoofing]
+  # Missing payload bytes (DLC < 8) are padded with -1, not 0, because 0x00 is a
+  # legitimate byte value; -1 keeps "absent" distinguishable for the models.
+  missing_byte_value: -1
+
+# ---------------------------------------------------------------------
+# Splits (Phase 2) - chronological per source file, defined BEFORE tuning.
+# ---------------------------------------------------------------------
+# Decided 2026-11-11, BEFORE any model training. Rationale: preprocessing/splits.py.
+splits:
+  train: 0.6                   # ratios for the chronological strategy (by duration)
+  val: 0.2
+  test: 0.2
+  purge_frames: 100            # = windows.frame_count; drop at each block start
+  hcrl:
+    strategy: chronological    # every HCRL file has attacks spread over its whole duration
+  road:
+    ambient_strategy: chronological
+    attack_strategy: capture   # whole captures -> one split (see measured problem in splits.py)
+    # Ordered [regex on capture name, split]; first match wins; unmatched = error.
+    capture_assignment:
+      - ['^max_engine_coolant_temp', test]   # single recording -> held out as an unseen target
+      - ['_1(_masquerade)?$', train]
+      - ['_2(_masquerade)?$', val]
+      - ['_3(_masquerade)?$', test]
+    # Masquerade files (genuine conflicting frames removed by the authors) are kept
+    # alongside the originals: the ROAD paper treats fabrication and masquerade as
+    # distinct attack types, and each pair always shares a split (no cross-split copies).
+    pair_policy: both          # both | original_only | masquerade_only
+
+# ---------------------------------------------------------------------
+# Class imbalance handling (TRAIN split only, never val/test)
+# ---------------------------------------------------------------------
+imbalance:
+  method: class_weight         # class_weight | undersample | none
+  undersample_normal_ratio: 3.0  # if undersample: keep <= 3 Normal frames per attack frame
+
+# ---------------------------------------------------------------------
+# Rolling-window features (Phase 2). Both a count window and a time window.
+# ---------------------------------------------------------------------
+windows:
+  frame_count: 100             # last N frames
+  time_ms: 50                  # last T milliseconds
+
+features:
+  min_period_samples: 5        # an ID needs >= 5 normal gaps in TRAIN to get a period estimate
+  chunk_rows: 250000           # rows per processed parquet chunk (memory bound only)

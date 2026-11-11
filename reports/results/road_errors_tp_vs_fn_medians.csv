@@ -1,0 +1,14 @@
+attack_type,outcome,win_cur_id_share,iat_id,iat_id_z,hamming_prev_id,payload_entropy,win_rate_fps,b1,b2,b5
+correlated_signal,TP,0.08,0.002,-0.1354,31.0,2.0,2511.9238,89.0,69.0,0.0
+correlated_signal_masquerade,TP,0.05,0.01,-0.0041,0.0,2.0,2419.0015,89.0,69.0,0.0
+fuzzing,TP,0.01,-1.0,0.0,-1.0,0.0,2543.5796,255.0,255.0,255.0
+max_engine_coolant_temp,FN,0.02,0.0251,-0.0775,5.0,1.5488,2461.1543,0.0,0.0,255.0
+max_engine_coolant_temp_masquerade,FN,0.01,0.1139,0.0052,0.0,1.5488,2429.7449,0.0,0.0,255.0
+max_speedometer,FN,0.09,0.002,-0.026,6.0,3.0,2507.79,72.0,4.0,255.0
+max_speedometer,TP,0.09,0.002,-0.026,7.0,3.0,2494.0303,114.0,4.0,255.0
+max_speedometer_masquerade,FN,0.05,0.01,-0.0027,5.0,3.0,2414.5706,72.0,4.0,255.0
+max_speedometer_masquerade,TP,0.05,0.0101,-0.0025,4.0,3.0,2411.2754,114.0,4.0,255.0
+reverse_light,FN,0.09,0.002,-0.0259,1.0,3.0,2513.0413,75.0,12.0,5.0
+reverse_light,TP,0.09,0.002,-0.0259,1.0,3.0,2458.2183,112.0,4.0,2.0
+reverse_light_masquerade,FN,0.05,0.0101,-0.0025,5.0,3.0,2407.124,79.0,12.0,5.0
+reverse_light_masquerade,TP,0.05,0.0097,-0.0035,4.0,3.0,2449.6768,112.0,4.0,2.0

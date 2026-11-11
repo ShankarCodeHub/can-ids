@@ -1,0 +1,5 @@
+model,group,frames,false_positives,fpr
+Baseline (rules),ambient capture,4891861,33607,0.006869982609890183
+Baseline (rules),normal frames in attack capture,1204878,8935,0.007415688559339618
+Isolation Forest,ambient capture,4891861,124042,0.025356812059868422
+Isolation Forest,normal frames in attack capture,1204878,17918,0.014871215176972274

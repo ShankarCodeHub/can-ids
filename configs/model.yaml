@@ -1,0 +1,111 @@
+# =====================================================================
+# model.yaml - hyperparameter search spaces and decision thresholds.
+# Values marked "initial" are starting points; the tuned values are
+# written here after validation-split tuning (never tuned on test).
+# =====================================================================
+
+seed: 42                       # passed explicitly as random_state everywhere
+
+# ---------------------------------------------------------------------
+# Stage 1 - Isolation Forest (Phase 3), trained on NORMAL train frames only
+# ---------------------------------------------------------------------
+anomaly:
+  search:
+    n_estimators: [100, 200, 400]
+    max_samples: [256, 1024, 4096]
+    max_features: [0.5, 1.0]
+  contamination: auto          # unused: threshold is set from validation Normal scores
+  target_fpr: 0.01             # choose the score threshold giving FPR <= 1% on val
+  selection_metric: recall_at_target_fpr
+  exclude_features: []         # e.g. [can_id] for a vehicle-agnostic variant
+  # Normal rows are subsampled (seeded) for speed only; ALL attack rows are kept.
+  train_normal_sample: 1000000 # pool the forest draws max_samples rows from per tree
+  val_normal_sample: 300000    # enough Normal rows to estimate a 1% FPR threshold
+  n_jobs: -1
+  # The tuned threshold + params are saved in models/<dataset>/anomaly/isolation_forest_metadata.json
+
+# ---------------------------------------------------------------------
+# Rule-based baseline (Phase 3) - tuned on val with the same FPR target
+# ---------------------------------------------------------------------
+baseline:
+  flag_unknown_ids: true       # alert on CAN IDs never seen in normal training traffic
+  rate_quantiles: [0.99, 0.999, 0.9999, 1.0]  # bus-load threshold = quantile of train-normal win_t_count
+  # alert if iat_id < ratio x normal period of that ID.
+  # 2026-11-11: the first grid [0.3, 0.5, 0.7, 0.9] could not reach FPR <= 1% on VAL
+  # (best 1.77% at 0.3); a val-only diagnosis showed the 1% point lies between 0.1
+  # and 0.2, so finer values were added there. Test data was not used.
+  iat_ratios: [0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.25, 0.3, 0.5, 0.7, 0.9]
+
+# ---------------------------------------------------------------------
+# Stage 2 - supervised classifier (Phase 4)
+# ---------------------------------------------------------------------
+classifier:
+  candidates: [random_forest, xgboost]
+  selection_metric: f1_macro   # macro-F1 treats rare attack classes as equally important
+  search:
+    method: randomized         # sampled with a fixed seed from the spaces below
+    n_iter: 10                 # per candidate (laptop budget; each fit ~0.3M rows)
+    validation: fixed_val      # the predefined validation split (no CV across time/captures)
+  # Imbalance (TRAIN only): Normal is subsampled for compute, then 'balanced'
+  # sample weights are applied to the remaining rows. Validation metrics are
+  # re-weighted so that subsampled Normal frames count at their true share.
+  train_normal_sample: 300000
+  random_forest:
+    n_estimators: [100, 200, 300]
+    max_depth: [null, 12, 20, 30]
+    min_samples_leaf: [1, 2, 5]
+    max_features: [sqrt, 0.5]
+  xgboost:
+    n_estimators: [200, 400, 800]
+    max_depth: [4, 6, 8]
+    learning_rate: [0.03, 0.1, 0.3]
+    subsample: [0.8, 1.0]
+    colsample_bytree: [0.8, 1.0]
+  # Calibration is NOT applied by default: hybrid thresholds are tuned on the
+  # model's own probability scale on validation. Calibration quality (ECE) is
+  # reported so the choice can be defended.
+  calibrate: false
+
+# ---------------------------------------------------------------------
+# Optional LSTM (PyTorch, Phase 4 only if time allows)
+# ---------------------------------------------------------------------
+lstm:
+  enabled: false
+  sequence_length: 32
+  hidden_size: 64
+  num_layers: 1
+  dropout: 0.2
+  batch_size: 256
+  epochs: 20
+  learning_rate: 0.001
+
+# ---------------------------------------------------------------------
+# Hybrid decision logic (Phase 4) - INITIAL values, tuned on val
+# ---------------------------------------------------------------------
+hybrid:
+  # Decision rules (hybrid.py), in order:
+  #  1. not anomaly and P(Normal) >= t_normal         -> Normal
+  #  2. max P(attack) >= t_attack                       -> that attack
+  #  3. anomaly and P(Normal) >= t_suppress            -> Normal (IF false alarm overruled)
+  #  4. anomaly                                         -> Unknown / Suspicious
+  #  5. otherwise                                       -> Normal, low-confidence flag
+  # t_suppress > 1 disables rule 3 (= the literal 4-rule design); both variants are reported.
+  t_normal: 0.90               # only decides the low-confidence FLAG (labels unaffected) - fixed
+  # Tuned on ROAD validation 2026-11-11 (grid below; initial values were 0.70 / 1.01).
+  # Source of truth used at runtime: models/road/hybrid/hybrid_metadata.json
+  t_attack: 0.60
+  t_suppress: 0.50
+  target_fpr: 0.01             # alarm FPR budget on val (Unknown counts as an alarm)
+  unknown_label: Unknown
+  search:
+    t_attack: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
+    t_suppress: [0.5, 0.7, 0.8, 0.9, 0.95, 0.99, 0.999, 1.01]
+  # Tuned values are written to models/<dataset>/hybrid/hybrid_metadata.json
+
+# ---------------------------------------------------------------------
+# Explainability (Phase 5)
+# ---------------------------------------------------------------------
+shap:
+  top_k: 5
+  max_latency_ms: 50           # if exceeded, explain alerts only
+  background_samples: 500

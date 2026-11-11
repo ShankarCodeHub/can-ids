@@ -1,0 +1,10 @@
+attack_type,FN,TP,miss_rate
+correlated_signal,0,1265,0.0
+correlated_signal_masquerade,0,1263,0.0
+fuzzing,0,114,0.0
+max_engine_coolant_temp,43,0,1.0
+max_engine_coolant_temp_masquerade,43,0,1.0
+max_speedometer,1710,4397,0.28000654986081547
+max_speedometer_masquerade,1714,4393,0.2806615359423612
+reverse_light,2310,2474,0.48285953177257523
+reverse_light_masquerade,2952,1832,0.617056856187291

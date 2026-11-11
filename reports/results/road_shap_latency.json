@@ -1,0 +1,12 @@
+{
+  "n": 200,
+  "p50_ms": 9.97410001582466,
+  "p95_ms": 11.05285497033037,
+  "p99_ms": 30.036279985796874,
+  "max_ms": 145.2714999904856,
+  "mean_ms": 11.336671001045033,
+  "backend": "xgboost native TreeSHAP (pred_contribs)",
+  "budget_ms": 50.0,
+  "within_budget_p95": true,
+  "policy": "explain every alert (p95 within budget)"
+}

@@ -1,0 +1,111 @@
+{
+  "algorithm": "xgboost",
+  "params": {
+    "subsample": 1.0,
+    "n_estimators": 200,
+    "max_depth": 8,
+    "learning_rate": 0.03,
+    "colsample_bytree": 1.0
+  },
+  "selection": "max weighted val macro-F1 over random search",
+  "n_iter_per_candidate": 10,
+  "val_metrics": {
+    "per_class": {
+      "Normal": {
+        "precision": 0.9977663203844844,
+        "recall": 0.9998498313105055,
+        "f1": 0.9988069892979656,
+        "support": 6108534.000000004
+      },
+      "Fuzzy": {
+        "precision": 0.9449634934797713,
+        "recall": 1.0,
+        "f1": 0.9717030645023769,
+        "support": 350.0
+      },
+      "Spoofing": {
+        "precision": 0.9094007491774828,
+        "recall": 0.39702769447874403,
+        "f1": 0.5527394700512003,
+        "support": 22676.0
+      }
+    },
+    "macro_f1": 0.8410831746171809,
+    "weighted_f1": 0.9971557759949697,
+    "confusion_matrix": {
+      "labels_true": [
+        "Normal",
+        "Fuzzy",
+        "Spoofing"
+      ],
+      "labels_pred": [
+        "Normal",
+        "Fuzzy",
+        "Spoofing"
+      ],
+      "values": [
+        [
+          6107616.689454491,
+          20.384678789173172,
+          896.9258667236197
+        ],
+        [
+          0.0,
+          350.0,
+          0.0
+        ],
+        [
+          13673.0,
+          0.0,
+          9003.0
+        ]
+      ]
+    }
+  },
+  "val_ece": 0.0003213556101150318,
+  "train_rows": 314748,
+  "train_class_counts": {
+    "Normal": 299771,
+    "Fuzzy": 591,
+    "Spoofing": 14386
+  },
+  "imbalance": "Normal subsampled + balanced sample weights",
+  "seed": 42,
+  "dataset": "road",
+  "feature_version": "1.0",
+  "features_built_at": "2026-11-11T04:36:21+00:00",
+  "git_commit": "uncommitted",
+  "trained_at": "2026-11-11T05:02:57+00:00",
+  "features": [
+    "can_id",
+    "dlc",
+    "b0",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "payload_entropy",
+    "hamming_prev_id",
+    "is_known_id",
+    "iat_global",
+    "iat_id",
+    "iat_id_z",
+    "win_rate_fps",
+    "win_unique_ids",
+    "win_top_id_share",
+    "win_id0_share",
+    "win_cur_id_share",
+    "win_iat_mean",
+    "win_iat_std",
+    "win_id_entropy",
+    "win_t_count"
+  ],
+  "classes": [
+    "Normal",
+    "Fuzzy",
+    "Spoofing"
+  ]
+}

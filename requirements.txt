@@ -1,0 +1,25 @@
+# Runtime dependencies (pinned for reproducibility). Python 3.11.
+# Dev tools live in requirements-dev.txt; PyTorch (optional LSTM) in requirements-dl.txt.
+# After installing, run `pip freeze > requirements.lock` to also record transitive versions.
+
+# --- data & ML
+numpy==1.26.4            # 1.26 kept (not 2.x) for maximum compatibility with shap/numba
+pandas==2.2.3
+pyarrow==18.0.0          # parquet I/O for data/interim and data/processed
+scikit-learn==1.5.2      # Isolation Forest, RandomForest, metrics, calibration
+xgboost==2.1.3           # gradient-boosted attack classifier
+shap==0.46.0             # TreeExplainer for alert explanations
+joblib==1.4.2            # model serialisation
+pyyaml==6.0.2            # configs/*.yaml
+
+# --- CAN I/O (passive listening + virtual-bus replay only)
+python-can==4.4.2
+
+# --- dashboard & plotting
+streamlit==1.40.1
+plotly==5.24.1
+matplotlib==3.9.2        # static figures for reports/figures
+
+# --- monitoring & utilities
+psutil==6.1.0            # CPU / RAM measurements
+tqdm==4.67.0             # progress bars for long dataset builds

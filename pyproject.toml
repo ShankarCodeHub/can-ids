@@ -1,0 +1,61 @@
+# Packaging + tool configuration in one place.
+# The "src layout" (code under src/canids) prevents accidentally importing the
+# package from the working directory instead of the installed version — a common
+# source of "works on my machine" bugs.
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "canids"
+version = "0.1.0"
+description = "ML-based Intrusion Detection System for in-vehicle CAN bus networks (academic, passive, defensive prototype)."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Uma Shankar" },
+    { name = "Priyanshu Raj" },
+    { name = "Ruby Kumari" },
+]
+# Runtime dependencies are pinned in requirements.txt (reproducible installs);
+# `pip install -e .` only registers the package itself.
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]          # tests work even before `pip install -e .`
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: long-running tests (deselect with -m 'not slow')",
+    "integration: end-to-end tests that touch files / virtual CAN bus",
+]
+
+# ---------------------------------------------------------------- coverage
+[tool.coverage.run]
+source = ["canids"]
+branch = true
+
+# ---------------------------------------------------------------- ruff (linter)
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# E/F = pycodestyle + pyflakes, I = import sorting, B = bugbear,
+# UP = pyupgrade, N = naming, SIM = simplifications
+select = ["E", "F", "I", "B", "UP", "N", "SIM"]
+
+[tool.ruff.lint.pep8-naming]
+# ML convention: capital X for feature matrices (X, X_val, Xtr, ...)
+ignore-names = ["X", "X_*", "Xtr", "Xv", "Xte"]
+
+# ---------------------------------------------------------------- black (formatter)
+[tool.black]
+line-length = 100
+target-version = ["py311"]

@@ -1,0 +1,13 @@
+{
+  "method": "balanced",
+  "train_counts": {
+    "Normal": 15144362,
+    "Spoofing": 14386,
+    "Fuzzy": 591
+  },
+  "weights": {
+    "Normal": 0.33366298296356095,
+    "Spoofing": 351.2521201167802,
+    "Fuzzy": 8550.106598984772
+  }
+}

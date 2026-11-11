@@ -1,0 +1,243 @@
+{
+  "dataset": "road",
+  "split": "val",
+  "backend": "xgboost native TreeSHAP (pred_contribs)",
+  "generated_at": "2026-11-11T05:10:42+00:00",
+  "git_commit": "uncommitted",
+  "note": "SHAP values show which features the model relied on (attribution), not proof of what caused the attack.",
+  "examples": [
+    {
+      "case": "fuzzy",
+      "available": true,
+      "figure": "reports\\figures\\road_alert_1_fuzzy.png",
+      "frame": {
+        "source_file": "attacks/fuzzing_attack_2.log",
+        "timestamp": 1010000011.540625,
+        "can_id": "0x49F",
+        "true_label": "Fuzzy",
+        "attack_type": "fuzzing"
+      },
+      "hybrid": {
+        "predicted_class": "Fuzzy",
+        "rule": "attack_classified",
+        "is_anomaly": true,
+        "anomaly_score": 0.6289820295197885
+      },
+      "explanation": {
+        "predicted_class": "Fuzzy",
+        "explained_class": "Fuzzy",
+        "probability": 0.9979321956634521,
+        "base_value": 0.45865684747695923,
+        "margin": 4.143195952929091,
+        "top_features": [
+          {
+            "feature": "b0",
+            "value": 255.0,
+            "shap": 3.665464162826538
+          },
+          {
+            "feature": "b4",
+            "value": 255.0,
+            "shap": 0.015472939237952232
+          },
+          {
+            "feature": "b1",
+            "value": 255.0,
+            "shap": 0.002920617815107107
+          },
+          {
+            "feature": "win_iat_std",
+            "value": 0.0005319081828929484,
+            "shap": 0.0006813855725340545
+          },
+          {
+            "feature": "can_id",
+            "value": 1183.0,
+            "shap": 0.0
+          }
+        ],
+        "reason": "payload byte 0 = 0xFF and payload byte 4 = 0xFF -> Fuzzy-like",
+        "latency_ms": 10.358600004110485,
+        "backend": "xgboost native TreeSHAP (pred_contribs)",
+        "note": "SHAP values show which features the model relied on (attribution), not proof of what caused the attack.",
+        "extra": {}
+      }
+    },
+    {
+      "case": "spoofing_fabrication",
+      "available": true,
+      "figure": "reports\\figures\\road_alert_2_spoofing_fabrication.png",
+      "frame": {
+        "source_file": "attacks/reverse_light_off_attack_2.log",
+        "timestamp": 1180000026.674966,
+        "can_id": "0x0D0",
+        "true_label": "Spoofing",
+        "attack_type": "reverse_light"
+      },
+      "hybrid": {
+        "predicted_class": "Spoofing",
+        "rule": "attack_classified",
+        "is_anomaly": false,
+        "anomaly_score": 0.4867682768098798
+      },
+      "explanation": {
+        "predicted_class": "Spoofing",
+        "explained_class": "Spoofing",
+        "probability": 0.997880220413208,
+        "base_value": 0.49918484687805176,
+        "margin": 4.1172105226810345,
+        "top_features": [
+          {
+            "feature": "win_cur_id_share",
+            "value": 0.07999999821186066,
+            "shap": 1.9844000339508057
+          },
+          {
+            "feature": "b1",
+            "value": 113.0,
+            "shap": 0.7912512421607971
+          },
+          {
+            "feature": "iat_id_z",
+            "value": -0.02886967733502388,
+            "shap": 0.5652644038200378
+          },
+          {
+            "feature": "iat_id",
+            "value": 0.0010039806365966797,
+            "shap": 0.27744293212890625
+          },
+          {
+            "feature": "b5",
+            "value": 2.0,
+            "shap": -0.03508080542087555
+          }
+        ],
+        "reason": "this ID is 0.08 of the last 100 frames and payload byte 1 = 0x71 -> Spoofing-like",
+        "latency_ms": 10.64089999999851,
+        "backend": "xgboost native TreeSHAP (pred_contribs)",
+        "note": "SHAP values show which features the model relied on (attribution), not proof of what caused the attack.",
+        "extra": {}
+      }
+    },
+    {
+      "case": "spoofing_masquerade",
+      "available": true,
+      "figure": "reports\\figures\\road_alert_3_spoofing_masquerade.png",
+      "frame": {
+        "source_file": "attacks/reverse_light_off_attack_2_masquerade.log",
+        "timestamp": 1210000021.17566,
+        "can_id": "0x0D0",
+        "true_label": "Spoofing",
+        "attack_type": "reverse_light_masquerade"
+      },
+      "hybrid": {
+        "predicted_class": "Spoofing",
+        "rule": "attack_classified",
+        "is_anomaly": false,
+        "anomaly_score": 0.4567924161766267
+      },
+      "explanation": {
+        "predicted_class": "Spoofing",
+        "explained_class": "Spoofing",
+        "probability": 0.9929475784301758,
+        "base_value": 0.49918484687805176,
+        "margin": 3.6661093804445954,
+        "top_features": [
+          {
+            "feature": "win_cur_id_share",
+            "value": 0.03999999910593033,
+            "shap": 2.268371105194092
+          },
+          {
+            "feature": "b1",
+            "value": 113.0,
+            "shap": 0.8375371098518372
+          },
+          {
+            "feature": "iat_id_z",
+            "value": -0.014092477969825268,
+            "shap": -0.2837311327457428
+          },
+          {
+            "feature": "b2",
+            "value": 4.0,
+            "shap": 0.26113516092300415
+          },
+          {
+            "feature": "b3",
+            "value": 96.0,
+            "shap": 0.0325821153819561
+          }
+        ],
+        "reason": "this ID is 0.04 of the last 100 frames and payload byte 1 = 0x71 -> Spoofing-like",
+        "latency_ms": 9.904999984428287,
+        "backend": "xgboost native TreeSHAP (pred_contribs)",
+        "note": "SHAP values show which features the model relied on (attribution), not proof of what caused the attack.",
+        "extra": {}
+      }
+    },
+    {
+      "case": "dos",
+      "available": false,
+      "reason": "dataset has no DoS class"
+    },
+    {
+      "case": "false_alarm",
+      "available": true,
+      "figure": "reports\\figures\\road_alert_4_false_alarm.png",
+      "frame": {
+        "source_file": "ambient/ambient_highway_street_driving_long.log",
+        "timestamp": 1110002903.501211,
+        "can_id": "0x0D0",
+        "true_label": "Normal",
+        "attack_type": "none"
+      },
+      "hybrid": {
+        "predicted_class": "Spoofing",
+        "rule": "attack_classified",
+        "is_anomaly": false,
+        "anomaly_score": 0.39377351641410485
+      },
+      "explanation": {
+        "predicted_class": "Spoofing",
+        "explained_class": "Spoofing",
+        "probability": 0.9937390089035034,
+        "base_value": 0.49918484687805176,
+        "margin": 3.628335909670568,
+        "top_features": [
+          {
+            "feature": "win_cur_id_share",
+            "value": 0.05000000074505806,
+            "shap": 2.206709384918213
+          },
+          {
+            "feature": "b1",
+            "value": 115.0,
+            "shap": 0.8198673725128174
+          },
+          {
+            "feature": "b2",
+            "value": 4.0,
+            "shap": 0.26113516092300415
+          },
+          {
+            "feature": "iat_id",
+            "value": 0.010954856872558594,
+            "shap": -0.2012300342321396
+          },
+          {
+            "feature": "b0",
+            "value": 26.0,
+            "shap": -0.1332266628742218
+          }
+        ],
+        "reason": "this ID is 0.05 of the last 100 frames and payload byte 1 = 0x73 -> Spoofing-like",
+        "latency_ms": 12.604399991687387,
+        "backend": "xgboost native TreeSHAP (pred_contribs)",
+        "note": "SHAP values show which features the model relied on (attribution), not proof of what caused the attack.",
+        "extra": {}
+      }
+    }
+  ]
+}

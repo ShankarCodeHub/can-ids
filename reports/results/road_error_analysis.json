@@ -1,0 +1,58 @@
+{
+  "dataset": "road",
+  "tp": 15738,
+  "fn": 8772,
+  "fp": 6769,
+  "fn_by_injection_position": [
+    {
+      "first_second_of_injection": false,
+      "FN": 8552,
+      "TP": 15023,
+      "miss_rate": 0.36275715800636266
+    },
+    {
+      "first_second_of_injection": true,
+      "FN": 220,
+      "TP": 715,
+      "miss_rate": 0.23529411764705882
+    }
+  ],
+  "fn_detail": {
+    "by_rule": {
+      "normal_confident": 7299,
+      "normal_low_confidence": 1115,
+      "anomaly_overruled": 358
+    },
+    "by_predicted": {
+      "Normal": 8772
+    }
+  },
+  "fp_detail": {
+    "by_predicted_class": {
+      "Spoofing": 6713,
+      "Unknown": 54,
+      "Fuzzy": 2
+    },
+    "by_rule": {
+      "attack_classified": 6715,
+      "unknown_suspicious": 54
+    },
+    "cold_start_first_frame_of_id": 57,
+    "in_drift_captures": 1,
+    "in_attack_captures": 6580,
+    "in_attack_captures_inside_injection_window": 985,
+    "possible_label_noise_all_FF_payload": 2,
+    "top_can_ids": {
+      "0x0D0": 6693,
+      "0x6E0": 12,
+      "0x533": 11,
+      "0x5FD": 11,
+      "0x618": 9,
+      "0x0A7": 8,
+      "0x671": 8,
+      "0x2AB": 7,
+      "0x0F8": 4,
+      "0x69D": 4
+    }
+  }
+}

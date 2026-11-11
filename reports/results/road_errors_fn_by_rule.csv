@@ -1,0 +1,7 @@
+attack_type,anomaly_overruled,normal_confident,normal_low_confidence
+max_engine_coolant_temp,0,43,0
+max_engine_coolant_temp_masquerade,0,43,0
+max_speedometer,357,1353,0
+max_speedometer_masquerade,1,1713,0
+reverse_light,0,1798,512
+reverse_light_masquerade,0,2349,603

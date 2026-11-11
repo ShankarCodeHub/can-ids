@@ -1,0 +1,62 @@
+# =====================================================================
+# app.yaml - dashboard, replay, live listening, alerting and logging.
+# =====================================================================
+
+dashboard:
+  title: "CAN Bus Intrusion Detection System"
+  model_dataset: road          # which models/<dataset>/ the dashboard loads
+  replay_dirs: [data/interim/road, data/interim/hcrl, data/demo]   # files offered for replay
+  refresh_interval_s: 1.0      # UI refresh period while monitoring
+  max_table_rows: 200          # recent alerts shown in the live table
+  chart_window_s: 60           # seconds of history in the live message-rate chart
+
+# ---------------------------------------------------------------------
+# Replay - recorded logs onto an ISOLATED virtual bus only
+# ---------------------------------------------------------------------
+replay:
+  interface: auto              # auto -> socketcan/vcan0 on Linux if present, else python-can 'virtual'
+  channel: vcan0               # used with socketcan; the virtual interface uses 'canids_demo'
+  virtual_channel: canids_demo
+  speed: 1.0                   # 1.0 = real time, 10.0 = 10x faster, 0 = as fast as possible
+  loop: false
+
+# ---------------------------------------------------------------------
+# Live reader - PASSIVE ONLY (never transmits)
+# ---------------------------------------------------------------------
+live:
+  enabled: false
+  interface: socketcan
+  channel: can0
+  bitrate: 500000
+  listen_only: true            # must stay true; enforced in code
+
+# ---------------------------------------------------------------------
+# Real-time pipeline (Phase 6)
+# ---------------------------------------------------------------------
+pipeline:
+  batch_size: 256              # score at most this many frames per model call
+  max_wait_ms: 20              # ...or whatever arrived within 20 ms (latency bound)
+
+# ---------------------------------------------------------------------
+# Alerting (Phase 6)
+# ---------------------------------------------------------------------
+alerting:
+  db_path: reports/alerts.sqlite
+  aggregation_window_ms: 500   # collapse identical (class, CAN ID) alerts within this window
+  severity:                    # predicted class -> default severity
+    Unknown: Medium
+    Fuzzy: High
+    Spoofing: High
+    DoS: Critical
+
+# ---------------------------------------------------------------------
+# Monitoring + logging
+# ---------------------------------------------------------------------
+monitoring:
+  psutil_interval_s: 1.0
+
+logging:
+  level: INFO
+  dir: logs
+  max_bytes: 5242880           # 5 MB per file
+  backup_count: 3

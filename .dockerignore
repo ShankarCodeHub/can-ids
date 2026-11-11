@@ -1,0 +1,20 @@
+# Keep the image small: code, configs, trained models, saved results and the small
+# demo logs only. Large datasets and local runtime files never enter the image.
+.venv
+venv
+.git
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+logs
+data/raw
+data/interim
+data/processed
+deploy/raspberry_pi/bundle
+models/**/feature_scaler.joblib
+notebooks/.ipynb_checkpoints
+reports/*.sqlite*
+*.sqlite
+*.db

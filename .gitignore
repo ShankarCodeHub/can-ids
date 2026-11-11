@@ -1,0 +1,47 @@
+# ---------- Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ---------- Environments
+.venv/
+venv/
+.env
+
+# ---------- Data (large / licensed — never commit; folders kept via .gitkeep)
+data/raw/**/*
+!data/raw/**/
+!data/raw/**/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# ---------- Models
+# The final ROAD models are small (about 2.6 MB in models/<dataset>/...) and ARE committed,
+# so a fresh clone and the Docker demo work without retraining. Large / scratch
+# artefacts are ignored:
+models/*.pt
+models/*.joblib
+models/**/feature_scaler.joblib
+deploy/raspberry_pi/bundle/
+# data/demo/ (small CC BY 4.0 ROAD excerpts) IS committed; see data/demo/README.md
+
+# ---------- Runtime outputs
+logs/
+*.sqlite
+*.db
+
+# ---------- Notebooks / editors / OS
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

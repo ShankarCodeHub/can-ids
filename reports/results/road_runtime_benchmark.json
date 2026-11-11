@@ -1,0 +1,124 @@
+{
+  "hardware": {
+    "cpu": "AMD Ryzen 5 7520U with Radeon Graphics",
+    "logical_cpus": 8,
+    "physical_cpus": 4,
+    "ram_gb": 15.3,
+    "os": "Windows 11 (build 10.0.26300)",
+    "python": "3.11.9"
+  },
+  "git_commit": "uncommitted",
+  "run_at": "2026-11-11T05:40:04+00:00",
+  "input": {
+    "files": [
+      "attacks__max_speedometer_attack_3.parquet",
+      "ambient__ambient_highway_street_driving_long.parquet"
+    ],
+    "frames": 1000000,
+    "per_file": [
+      213541,
+      786459
+    ]
+  },
+  "config": {
+    "window_frames": 100,
+    "window_ms": 50.0,
+    "max_wait_ms": 20.0,
+    "agg_ms": 500.0,
+    "batch_size": 256
+  },
+  "features_only": {
+    "frames": 1000000,
+    "seconds": 5.617916700022761,
+    "us_per_frame": 5.617916700022761,
+    "throughput_fps": 178001.92729734647
+  },
+  "pipeline": {
+    "frames": 1000000,
+    "alert_frames": 6503,
+    "events": 25,
+    "throughput_fps": 16573.170231676497,
+    "wall_s": 60.338486000022385,
+    "cpu_percent": 732.0938994058222,
+    "peak_rss_mb": 944.28515625,
+    "p50_ms": 13.694049994228408,
+    "p95_ms": 16.4900350064272,
+    "p99_ms": 19.1240139841102,
+    "max_ms": 24.200999992899597,
+    "mean_ms": 13.789515599166625
+  },
+  "pipeline_inline_shap": {
+    "frames": 1000000,
+    "alert_frames": 6503,
+    "events": 25,
+    "throughput_fps": 13687.73065331494,
+    "wall_s": 73.0581296000164,
+    "cpu_percent": 575.8684930799345,
+    "peak_rss_mb": 952.1953125,
+    "p50_ms": 14.48120002169162,
+    "p95_ms": 18.085499992594123,
+    "p99_ms": 22.699122023186636,
+    "max_ms": 52.7820999850519,
+    "mean_ms": 14.776595039615641
+  },
+  "pipeline_batch1_5k": {
+    "frames": 5000,
+    "alert_frames": 212,
+    "events": 8,
+    "throughput_fps": 132.52613993973665,
+    "wall_s": 37.7284058999503,
+    "cpu_percent": 537.8076416429438,
+    "peak_rss_mb": 952.1484375,
+    "p50_ms": 6.48650000221096,
+    "p95_ms": 12.23399001755752,
+    "p99_ms": 26.330880963942057,
+    "max_ms": 631.6169000347145,
+    "mean_ms": 7.486586920288391
+  },
+  "pipeline_batch256_5k": {
+    "frames": 5000,
+    "alert_frames": 212,
+    "events": 8,
+    "throughput_fps": 11794.274822442421,
+    "wall_s": 0.4239345000241883,
+    "cpu_percent": 563.9137649480282,
+    "peak_rss_mb": 952.20703125,
+    "p50_ms": 14.791349967708811,
+    "p95_ms": 25.95417000993621,
+    "p99_ms": 39.72065000445582,
+    "max_ms": 44.49060000479221,
+    "mean_ms": 16.604426291654818
+  },
+  "end_to_end_bus": {
+    "frames": 786459,
+    "frames_sent": 786459,
+    "throughput_fps": 10655.04426194568,
+    "wall_s": 73.81095569999889,
+    "cpu_percent": 581.4897272763621,
+    "peak_rss_mb": 1440.0,
+    "p50_ms": 16.181399987544864,
+    "p95_ms": 20.86250500578897,
+    "p99_ms": 47.00918302987708,
+    "max_ms": 73.04530002875254
+  },
+  "shap_single": {
+    "n": 500,
+    "p50_ms": 10.895149986026809,
+    "p95_ms": 16.16761500190477,
+    "p99_ms": 33.16660499374844,
+    "max_ms": 117.03560000751168,
+    "mean_ms": 11.988616400398314,
+    "backend": "xgboost native TreeSHAP (pred_contribs)"
+  },
+  "model_size_bytes": {
+    "isolation_forest": 2392180,
+    "xgboost_classifier": 266227,
+    "feature_artifacts": 14908
+  },
+  "can_bus_capacity_500kbps": {
+    "bitrate": 500000,
+    "dlc0_fps": 10638.297872340425,
+    "dlc8_no_stuffing_fps": 4504.504504504504,
+    "dlc8_worst_stuffing_fps": 3703.703703703704
+  }
+}
