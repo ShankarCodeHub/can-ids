@@ -36,6 +36,8 @@ try:
 except ModuleNotFoundError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from car_view import render_car_html, state_from_snapshot  # app/car_view.py (same folder)
+
 from canids import __version__
 from canids.alerting.alert import DEFAULT_SEVERITY, SEVERITIES
 from canids.alerting.store import AlertStore
@@ -157,12 +159,21 @@ with tabs[0]:
             )
         if b2.button("Stop", disabled=not session.running):
             session.stop()
+    show_car = st.toggle(
+        "Live car view (animated)",
+        value=True,
+        help="Top-down car with ECUs on a CAN bus. Packets, status, attack "
+        "class and CAN ID come from the running detector.",
+    )
 
     @st.fragment(run_every=REFRESH)
     def live_panel() -> None:
         s = get_session().snapshot()
         if s.get("error"):
             st.error(s["error"])
+        if show_car:
+            # animated top-down car: ECUs on a CAN bus, live packets, attack path + IDS alarm
+            st.html(render_car_html(state_from_snapshot(s), seed=int(time.time())))
         k1, k2, k3, k4, k5 = st.columns(5)
         k1.metric("Frames / s (now)", f"{s.get('fps_now', 0):,.0f}")
         k2.metric("Total frames", f"{s.get('frames', 0):,}")

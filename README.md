@@ -40,6 +40,10 @@ an explainable, real-time IDS:
    becomes **Unknown / Suspicious** instead of being forced into a label.
 5. **SHAP explanations**, burst-aggregated **alerts** in SQLite, a **Streamlit dashboard**, and a
    headless **edge runner** (Raspberry Pi ready).
+6. An animated **Live Car View**: a top-down car with its ECUs on a CAN bus. Packets flow in real
+   time; when an attack is detected, the injection path from the OBD-II port lights up and the IDS
+   shield turns red, showing the live class, CAN ID and alert count. ECU placement is
+   illustrative, because ROAD IDs are anonymised.
 
 **Research question.** Can a hybrid pipeline (anomaly detector plus classifier) balance detecting
 unusual traffic with interpretable attack categories, while keeping false positives low and latency

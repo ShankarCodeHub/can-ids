@@ -54,6 +54,8 @@ select = ["E", "F", "I", "B", "UP", "N", "SIM"]
 [tool.ruff.lint.per-file-ignores]
 # imports after the src/ path fallback for hosted deployments
 "app/dashboard.py" = ["E402"]
+# SVG markup template: long attribute lines are clearer unwrapped
+"app/car_view.py" = ["E501"]
 
 [tool.ruff.lint.pep8-naming]
 # ML convention: capital X for feature matrices (X, X_val, Xtr, ...)
