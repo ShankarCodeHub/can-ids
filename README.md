@@ -11,6 +11,10 @@
 B.Tech CSE Major Project · Dev Bhoomi Uttarakhand University (DBUU), Dehradun ·
 School of Engineering and Computing, Department of CSE · Batch 2026–2027
 
+**▶ Live demo:** https://can-ids-ee8hzvntfq8qmxecwnd5hg.streamlit.app/. Open **Live Monitor**,
+pick a `demo/...` log and press **Start**. The free app sleeps when idle; if it shows a sleep
+screen, click "Yes, get this app back up!" and wait about a minute.
+
 > ⚠️ **Safety notice.** This is an academic, **passive, defensive** research prototype. It uses
 > public datasets and isolated virtual CAN only (python-can `virtual` bus or Linux `vcan0`).
 > - The replayer **refuses any physical interface**.
